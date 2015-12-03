@@ -53,4 +53,14 @@ public class Case {
 		return this.yEcran;
 	}
 
+	public void ajouterFleur(Fleur nouvelleFleur){
+		this.fleur = nouvelleFleur;
+		this.fleur.ajouter(this);
+	}
+	
+	public void enleverFleur(){
+		this.fleur.supprimer();
+		this.fleur = null;
+	}
+	
 }
