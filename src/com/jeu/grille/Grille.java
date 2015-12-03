@@ -39,4 +39,12 @@ public class Grille {
 		}
 	}
 	
+	public void initFleurs() {
+		for (int i = 0; i < nbCasesX; i++) {
+			for (int j = 0; j < nbCasesY; j++) {
+				cases[i][j].ajouterFleur(Fleur.getFleurAleat());
+			}
+		}
+	}
+	
 }
