@@ -7,8 +7,11 @@ public class Jeu {
 	
 	protected Joueur joueur;
 	protected List<Niveau> niveaux;
+	protected Niveau niveauSelectionne;
+
 	
 	public Jeu() {
+		niveauSelectionne = null;
 		this.niveaux = new ArrayList<>();
 		
 		//TODO
@@ -33,7 +36,15 @@ public class Jeu {
 		return niveaux;
 	}
 	
+	public Niveau getNiveauSelectionne() {
+		return niveauSelectionne;
+	}
+	
 	public void setJoueur(Joueur joueur) {
 		this.joueur = joueur;
+	}
+	
+	public void setNiveauSelectionne(int indice) {
+		niveauSelectionne = niveaux.get(indice);
 	}
 }

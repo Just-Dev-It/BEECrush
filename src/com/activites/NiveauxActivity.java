@@ -9,6 +9,7 @@ import com.example.beecrush.R;
 import com.jeu.Parametre;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -72,10 +73,13 @@ public class NiveauxActivity extends Activity {
 			textView.getLayoutParams().width = widthTextView;
 			textView.getLayoutParams().height = widthTextView;
 			
+			final int indice = i;
 			textView.setOnClickListener(new OnClickListener() {	
 				@Override
 				public void onClick(View v) {
-					//TODO
+					jeu.setNiveauSelectionne(indice);
+					startActivity(new Intent(NiveauxActivity.this,
+							JeuActivity.class));
 				}
 			});
 			

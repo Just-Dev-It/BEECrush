@@ -1,5 +1,7 @@
 package com.activites;
 
+import com.domaine.Base;
+import com.domaine.Joueur;
 import com.example.beecrush.R;
 import com.jeu.Parametre;
 
@@ -38,6 +40,9 @@ public class MainActivity extends Activity {
 		bouton.setOnClickListener(new OnClickListener() {	
 			@Override
 			public void onClick(View v) {
+				//TODO
+				Base.jeu.setJoueur(new Joueur(Base.jeu, "KIRIKOU"));
+				
 				startActivity(new Intent(
 						MainActivity.this, NiveauxActivity.class));
 				finish();
