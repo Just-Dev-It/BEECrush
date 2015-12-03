@@ -1,8 +1,10 @@
 package com.jeu.grille;
 
+
 import com.example.beecrush.R;
 import com.jeu.Fleur;
 import com.jeu.Parametre;
+
 
 import android.annotation.SuppressLint;
 import android.widget.ImageView;
@@ -51,6 +53,36 @@ public class Case {
 	
 	public int getyEcran() {
 		return this.yEcran;
+	}
+	
+	public boolean estACoteDe(Case autre) {
+		return getDirection(this, autre) != null;
+	}
+	
+	public static Direction getDirection(Case cDep, Case cArr) {
+		int xArr, yArr, xDep, yDep;
+		xArr = cArr.getxGrille();
+		yArr = cArr.getyGrille();
+		xDep = cDep.getxGrille();
+		yDep = cDep.getyGrille();
+		
+		if (xArr-1==xDep && yArr==yDep)
+			return Direction.DROITE;
+		if (xArr-1==xDep && yArr-1==yDep)
+			return Direction.BAS_DROITE;
+		if (xArr==xDep && yArr-1==yDep)
+			return Direction.BAS;
+		if (xArr+1==xDep && yArr-1==yDep)
+			return Direction.BAS_GAUCHE;
+		if (xArr+1==xDep && yArr==yDep)
+			return Direction.GAUCHE;
+		if (xArr+1==xDep && yArr+1==yDep)
+			return Direction.HAUT_GAUCHE;
+		if (xArr==xDep && yArr+1==yDep)
+			return Direction.HAUT;
+		if (xArr-1==xDep && yArr+1==yDep)
+			return Direction.HAUT_DROITE;
+		return null;
 	}
 
 }

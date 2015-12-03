@@ -54,6 +54,7 @@ public class Jeu {
 	
 	public void setGrille(Grille grille) {
 		this.grille = grille;
+		grille.initFleurs();
 	}
 	
 	public Grille getGrille() {
