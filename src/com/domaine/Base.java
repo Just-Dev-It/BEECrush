@@ -2,6 +2,6 @@ package com.domaine;
 
 public class Base {
 
-	public static final int NB_NIVEAUX = 10;
+	public static Jeu jeu = new Jeu();
 	
 }

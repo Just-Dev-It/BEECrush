@@ -4,14 +4,16 @@ public class Niveau {
 	
 	protected static final int NB_ETOILES = 3;
 	
+	protected Jeu jeu;
 	protected int numero;
 	protected int nbAbeilles;
 	protected int scoreMaxiFait;
 	protected int[] scoresAFaire;
 	protected int nbEtoilesPourDebloquer;
 	
-	public Niveau(int numero, int nbAbeilles,
+	public Niveau(Jeu jeu, int numero, int nbAbeilles,
 			int[] scoresAFaire, int nbEtoilesPourDebloquer) {
+		this.jeu = jeu;
 		this.numero = numero;
 		this.scoreMaxiFait = 0;
 		this.nbAbeilles = nbAbeilles;

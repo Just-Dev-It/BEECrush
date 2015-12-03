@@ -1,19 +1,35 @@
 package com.domaine;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Jeu {
 	
 	protected Joueur joueur;
-	protected Niveau[] niveaux;
+	protected List<Niveau> niveaux;
 	
 	public Jeu() {
-		this.niveaux = new Niveau[Base.NB_NIVEAUX];
+		this.niveaux = new ArrayList<>();
+		
+		//TODO
+		int[] tab = {100, 200, 300};
+		niveaux.add(new Niveau(this, 1, 15, tab, 0));
+		niveaux.add(new Niveau(this, 2, 15, tab, 0));
+		niveaux.add(new Niveau(this, 3, 15, tab, 0));
+		niveaux.add(new Niveau(this, 4, 15, tab, 0));
+		niveaux.add(new Niveau(this, 5, 15, tab, 0));
+		niveaux.add(new Niveau(this, 6, 15, tab, 0));
+		niveaux.add(new Niveau(this, 7, 15, tab, 0));
+		niveaux.add(new Niveau(this, 8, 15, tab, 0));
+		niveaux.add(new Niveau(this, 9, 15, tab, 0));
+		niveaux.add(new Niveau(this, 10, 15, tab, 0));
 	}
 	
 	public Joueur getJoueur() {
 		return joueur;
 	}
 	
-	public Niveau[] getNiveaux() {
+	public List<Niveau> getNiveaux() {
 		return niveaux;
 	}
 	
