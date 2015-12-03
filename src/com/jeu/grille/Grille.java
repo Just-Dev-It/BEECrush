@@ -1,6 +1,7 @@
 package com.jeu.grille;
 
 import com.domaine.Jeu;
+import com.jeu.Fleur;
 import com.jeu.Parametre;
 
 public class Grille {

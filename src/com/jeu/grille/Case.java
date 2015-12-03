@@ -35,8 +35,7 @@ public class Case {
 		image.getLayoutParams().height = Grille.width_Cases;
 		image.setX(xEcran);
 		image.setY(yEcran);
-		image.setBackground(Parametre.resources.
-				getDrawable(R.drawable.case_normal));
+		deselectionner();
 	}
 
 	public int getxGrille() {
@@ -93,6 +92,16 @@ public class Case {
 	public void enleverFleur(){
 		this.fleur.supprimer();
 		this.fleur = null;
+	}
+	
+	public void selectionner() {
+		image.setBackground(Parametre.resources.
+				getDrawable(R.drawable.case_selectionnee));
+	}
+	
+	public void deselectionner() {
+		image.setBackground(Parametre.resources.
+				getDrawable(R.drawable.case_normal));
 	}
 	
 }

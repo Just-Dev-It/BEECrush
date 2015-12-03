@@ -31,12 +31,6 @@ public class Selection {
 		}
 	}
 	
-	private void deselectionnerAll() {
-		for (; fleursSelectionnees.size() > 0;) {
-			deselectionnerDerniere();
-		}
-	}
-	
 	private void deselectionnerDerniere() {
 		if (fleursSelectionnees.size() > 0) {
 			Fleur fleur = fleursSelectionnees.
