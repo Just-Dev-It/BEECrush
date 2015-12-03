@@ -1901,10 +1901,10 @@ containing a value of this type.
         public static final int abc_textfield_search_activated_mtrl_alpha=0x7f020038;
         public static final int abc_textfield_search_default_mtrl_alpha=0x7f020039;
         public static final int abc_textfield_search_material=0x7f02003a;
-        public static final int ic_launcher=0x7f02003b;
+        public static final int case_normal=0x7f02003b;
+        public static final int ic_launcher=0x7f02003c;
     }
     public static final class id {
-        public static final int RelativeLayout1=0x7f09004f;
         public static final int action_bar=0x7f090040;
         public static final int action_bar_activity_content=0x7f090003;
         public static final int action_bar_container=0x7f09003f;
@@ -1921,6 +1921,7 @@ containing a value of this type.
         public static final int action_settings=0x7f090053;
         public static final int activity_chooser_view_content=0x7f090026;
         public static final int activity_jeu_linear_layout_haut=0x7f090050;
+        public static final int activity_jeu_relative_layout=0x7f09004f;
         public static final int activity_main_bouton_ok=0x7f090051;
         public static final int activity_niveaux_tablelayout=0x7f090052;
         public static final int alertTitle=0x7f090030;

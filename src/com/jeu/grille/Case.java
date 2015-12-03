@@ -1,24 +1,40 @@
 package com.jeu.grille;
 
-import javax.swing.text.html.ImageView;
+import com.example.beecrush.R;
+import com.jeu.Fleur;
+import com.jeu.Parametre;
 
+import android.annotation.SuppressLint;
+import android.widget.ImageView;
+
+@SuppressLint("NewApi")
 public class Case {
 	protected int xGrille;
 	protected int yGrille;
 	protected int xEcran;
-	protected int yEcran 
+	protected int yEcran;
 	
 	protected Fleur fleur;
 	protected Grille grille;
 	
 	protected ImageView image;
 
-	public Case(int xGrille, int yGrille, int xEcran, int yEcran, Grille grille){
+	public Case(int xGrille, int yGrille,
+			int xEcran, int yEcran, Grille grille) {
 		this.xEcran = xGrille;
 		this.yGrille = yGrille;
 		this.xEcran = xEcran;
 		this.yEcran = yEcran;
 		this.grille = grille;
+		
+		image = new ImageView(Parametre.activiteDuJeu);
+		Parametre.layoutDuJeu.addView(image);
+		image.getLayoutParams().width = Grille.width_Cases;
+		image.getLayoutParams().height = Grille.width_Cases;
+		image.setX(xEcran);
+		image.setY(yEcran);
+		image.setBackground(Parametre.resources.
+				getDrawable(R.drawable.case_normal));
 	}
 
 	public int getxGrille() {
@@ -36,10 +52,5 @@ public class Case {
 	public int getyEcran() {
 		return this.yEcran;
 	}
-	
-	public int getgrille() {
-		return this.grille;
-	}
-	
-	public void 
+
 }

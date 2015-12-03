@@ -3,11 +3,15 @@ package com.domaine;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.jeu.grille.Grille;
+
 public class Jeu {
 	
 	protected Joueur joueur;
 	protected List<Niveau> niveaux;
 	protected Niveau niveauSelectionne;
+	
+	protected Grille grille;
 
 	
 	public Jeu() {
@@ -46,5 +50,13 @@ public class Jeu {
 	
 	public void setNiveauSelectionne(int indice) {
 		niveauSelectionne = niveaux.get(indice);
+	}
+	
+	public void setGrille(Grille grille) {
+		this.grille = grille;
+	}
+	
+	public Grille getGrille() {
+		return grille;
 	}
 }

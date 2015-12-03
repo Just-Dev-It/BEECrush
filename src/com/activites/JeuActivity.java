@@ -6,6 +6,7 @@ import com.domaine.Joueur;
 import com.domaine.Niveau;
 import com.example.beecrush.R;
 import com.jeu.Parametre;
+import com.jeu.grille.Grille;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -34,6 +36,11 @@ public class JeuActivity extends Activity {
 	}
 	
 	private void init() {
+		Parametre.activiteDuJeu = this;
+		Parametre.layoutDuJeu = (RelativeLayout)
+				findViewById(R.id.activity_jeu_relative_layout);
+		Parametre.resources = getResources();
+		
 		// Inialiser menu haut
 		LinearLayout linearLayout = (LinearLayout) findViewById(
 				R.id.activity_jeu_linear_layout_haut);
@@ -53,6 +60,9 @@ public class JeuActivity extends Activity {
 				+ "/" + niveau.getNbAbeilles());
 		linearLayout.addView(textViewNbAbeilles);
 		textViewNbAbeilles.getLayoutParams().width = Parametre.widthEcran / 3;
+		
+		// Initialiser la grille
+		jeu.setGrille(new Grille(jeu));
 		
 	}
 	
