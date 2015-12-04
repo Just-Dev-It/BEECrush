@@ -1,13 +1,24 @@
 package com.jeu.grille;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
+import android.os.Handler;
+import android.widget.ImageView;
+
+import com.activites.JeuActivity;
 import com.domaine.Jeu;
+import com.example.beecrush.R;
 import com.jeu.Fleur;
+import com.jeu.Parametre;
 
 public class Selection {
-
+	
+	private Thread thread;
+	
 	private Jeu jeu;
 	private List<Fleur> fleursSelectionnees;
 	
@@ -41,8 +52,10 @@ public class Selection {
 	}
 	
 	public int getScore() {
-		//TODO
-		return fleursSelectionnees.size();
+		int nbFleurs = fleursSelectionnees.size();
+		int lvl = jeu.getNiveauSelectionne().getNumero();
+		
+		return 20 * (nbFleurs - ((lvl + 1) > 0 ? lvl + 1 : 0));
 	}
 	
 	/**
@@ -70,6 +83,8 @@ public class Selection {
 	
 	public void relacher() {
 		if (fleursSelectionnees.size() > 1) {
+			((JeuActivity) Parametre.activiteDuJeu).jouerSonAbeille();
+			animationAbeille(new ArrayList<Fleur> (fleursSelectionnees));
 			for (Fleur fleur: fleursSelectionnees) {
 				fleur.getCase().enleverFleur();
 			}
@@ -82,5 +97,102 @@ public class Selection {
 			deselectionnerDerniere();
 		}
 	}
+	
+	@SuppressLint("NewApi")
+	private void animationAbeille(List<Fleur> fleurs) {
+		
+		final ImageView image = new ImageView(Parametre.activiteDuJeu);
+		Parametre.layoutDuJeu.addView(image);
+		image.getLayoutParams().width = Grille.width_Cases;
+		image.getLayoutParams().height = Grille.width_Cases;
+		image.setBackground(Parametre.resources.getDrawable(R.drawable.abeille));
+		
+		final int temps = 500;
+		final int nbFois = 30;
+		final Point depart = new Point(0, Parametre.heightEcran * 3 / 4);
+		final Point arrive = new Point(Parametre.widthEcran + 10, Parametre.heightEcran / 4);
+		
+		final int pasX = (arrive.x - depart.x) / nbFois;
+		final int pasY = (arrive.y - depart.y) / nbFois;
+		
+		image.setX(depart.x);
+		image.setY(depart.y);
+		
+		final Handler handler = new Handler();
+		thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				handler.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						Parametre.activiteDuJeu.runOnUiThread(new Runnable() {
+							@Override
+							public void run(){
+								if (image.getX() >= arrive.x) {
+									thread.interrupt();
+								} else {
+									image.setX(image.getX() + pasX);
+									image.setY(image.getY() + pasY);
+									handler.postDelayed(this, temps / nbFois);
+								}
+					        }
+						});
+					}
+				}, 0);
+			}
+		});
+		
+		thread.start();
+		
+	}
+	
+	private class Point {
+		int x;
+		int y;
+		public Point(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+	}
+	
+	/*
+	 * 
+	 * final Handler handler = new Handler();
+		threadBouge = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				handler.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						Parametre.activiteGrille.runOnUiThread(new Runnable() {
+							@Override
+							public void run(){
+								replacer(banane);
+								caseCourante = parcours.suivante();
+								if (caseCourante == null) {
+									banane.retirer();
+									Parametre.jeu.getJoueur().setALeDroitDeToucherGrille(true);
+									threadBouge.interrupt();
+								} else {
+									banane.allerVers(caseCourante, true);
+									Banane.this.multiplierSiSinge(caseCourante);
+									handler.postDelayed(this, tempsBougeParCase);
+								}
+					        }
+							
+							private void replacer(Pion pion) {
+								pion.imageView.setX(caseCourante.getXEcran());
+								pion.imageView.setY(caseCourante.getYEcran());
+							}
+						});
+					}
+				}, 0);
+			}
+		});
+		
+		threadBouge.start();
+	 * 
+	 * 
+	 */
 	
 }

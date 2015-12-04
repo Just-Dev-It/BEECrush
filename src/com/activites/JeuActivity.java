@@ -5,6 +5,7 @@ import com.domaine.Jeu;
 import com.domaine.Joueur;
 import com.domaine.Niveau;
 import com.example.beecrush.R;
+import com.jeu.Barre;
 import com.jeu.BoiteDialogue;
 import com.jeu.Parametre;
 import com.jeu.grille.Grille;
@@ -13,6 +14,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.Window;
@@ -24,6 +26,8 @@ import android.widget.TextView;
 
 public class JeuActivity extends Activity {
 
+	private MediaPlayer son;
+	
 	private Jeu jeu = Base.jeu;
 	private Joueur joueur = jeu.getJoueur();
 	private Niveau niveau = jeu.getNiveauSelectionne();
@@ -44,14 +48,20 @@ public class JeuActivity extends Activity {
 		
 		Parametre.activiteDuJeu = this;
 		Parametre.layoutDuJeu = (RelativeLayout)
-				findViewById(R.id.activity_jeu_relative_layout);
+				findViewById(R.id.activity_niveaux_relative_layout);
 		Parametre.resources = getResources();
 		
 		// Inialiser menu haut
 		LinearLayout linearLayout = (LinearLayout) findViewById(
 				R.id.activity_jeu_linear_layout_haut);
 		
-		SeekBar seekBar = new SeekBar(this);
+		/*SeekBar seekBar = new SeekBar(this);
+		linearLayout.addView(seekBar);
+		seekBar.setMax(niveau.getScoresAFaire()[2]);
+		seekBar.getLayoutParams().width = Parametre.widthEcran / 3;
+		jeu.getJoueur().seekBarScore = seekBar;*/
+		
+		Barre seekBar = new Barre(this);
 		linearLayout.addView(seekBar);
 		seekBar.setMax(niveau.getScoresAFaire()[2]);
 		seekBar.getLayoutParams().width = Parametre.widthEcran / 3;
@@ -91,7 +101,10 @@ public class JeuActivity extends Activity {
 	}
 	
 	public void finir() {
-		String msg1 = "Quitter";
+		jeu.getJoueur().enregistrerScoreFait(jeu.getNiveauSelectionne(),
+				joueur.getScoreFaitEnCeMoment());
+		
+		String msg1 = "Retourner";
 		
 		OnClickListener action1 = new OnClickListener() {
 			@Override
@@ -106,6 +119,15 @@ public class JeuActivity extends Activity {
 				this, "GAME OVER", msg1, action1, null, null);
 		
 		dialogue.show();
+	}
+	
+	public void jouerSonAbeille() {
+		if (son != null) {
+			son.stop();
+			son.release();
+		}
+		son = MediaPlayer.create(this, R.raw.son_parcours_abeille);
+		son.start();
 	}
 	
 }

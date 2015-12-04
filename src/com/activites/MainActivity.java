@@ -35,6 +35,7 @@ public class MainActivity extends Activity {
 		
 		Parametre.widthEcran = dm.widthPixels;
 		Parametre.heightEcran = dm.heightPixels;
+		Parametre.resources = getResources();
 		
 		Button bouton = (Button) findViewById(R.id.activity_main_bouton_ok);
 		bouton.setOnClickListener(new OnClickListener() {	

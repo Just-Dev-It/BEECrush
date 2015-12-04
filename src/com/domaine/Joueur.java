@@ -1,5 +1,7 @@
 package com.domaine;
 
+import java.util.List;
+
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -16,6 +18,16 @@ public class Joueur {
 		this.jeu = jeu;
 		this.nom = nom;
 		init();
+	}
+	
+	public int getNbEtoiles() {
+		int nbEtoiles = 0;
+		List<Niveau> niveaux = jeu.getNiveaux();
+		for (int i = 0; i < niveaux.size(); i++) {
+			Niveau niveauI = niveaux.get(i);
+			nbEtoiles += (niveauI.getScoreMaxiFait() / 100 > 3) ? 3 : niveauI.getScoreMaxiFait() / 100;
+		}
+		return nbEtoiles;
 	}
 	
 	public void init() {
@@ -65,5 +77,10 @@ public class Joueur {
 	@Override
 	public String toString() {
 		return getNom();
+	}
+	
+	public void enregistrerScoreFait(Niveau niveau, int score) {
+		niveau.enregistrer(score);
+		
 	}
 }

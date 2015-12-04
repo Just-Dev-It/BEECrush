@@ -8,6 +8,7 @@ import com.domaine.Niveau;
 import com.example.beecrush.R;
 import com.jeu.Parametre;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,11 +18,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.TableRow.LayoutParams;
 
+@SuppressLint("NewApi")
 public class NiveauxActivity extends Activity {
 
 	private Jeu jeu = Base.jeu;
@@ -42,6 +47,26 @@ public class NiveauxActivity extends Activity {
 		TableLayout tableLayout = (TableLayout)
 				findViewById(R.id.activity_niveaux_tablelayout);
 		
+		// Afficher le menus (nb etoiles + icone etoiles)
+		LinearLayout layoutHaut = (LinearLayout)
+				findViewById(R.id.activity_niveaux_layout_linear_haut);
+		
+		final int widthIcone = Parametre.widthEcran / 10;
+		
+		ImageView imageViewIconeEtoile = new ImageView(this);
+		layoutHaut.addView(imageViewIconeEtoile);
+		imageViewIconeEtoile.setBackground(Parametre.resources.
+				getDrawable(R.drawable.pot_de_miel));
+		imageViewIconeEtoile.getLayoutParams().width = widthIcone;
+		imageViewIconeEtoile.getLayoutParams().height = widthIcone;
+		
+		TextView textViewEtoiles = new TextView(this);
+		layoutHaut.addView(textViewEtoiles);
+		textViewEtoiles.getLayoutParams().width = widthIcone;
+		textViewEtoiles.getLayoutParams().height = widthIcone;
+		textViewEtoiles.setText("x " + jeu.getJoueur().getNbEtoiles());
+		textViewEtoiles.setGravity(Gravity.CENTER);
+		
 		// Afficher tous les niveaux
 		TableRow tableRow = null;
 		List<Niveau> niveaux = jeu.getNiveaux();
@@ -58,7 +83,8 @@ public class NiveauxActivity extends Activity {
 			tableRow.addView(textView);
 			textView.setText("" + niveaux.get(i).getNumero());
 			textView.setGravity(Gravity.CENTER);
-			textView.setBackgroundColor(Color.GRAY);
+			
+			textView.setBackground(getResources().getDrawable(R.drawable.img_un));
 			
 			int numLigne = tableLayout.getChildCount() - 1;
 			int numGrille = tableRow.getChildCount() - 1;
@@ -82,6 +108,39 @@ public class NiveauxActivity extends Activity {
 							JeuActivity.class));
 				}
 			});
+			
+			textView.setEnabled(jeu.getJoueur().getNbEtoiles() >=
+					niveaux.get(i).getNbEtoilesPourDebloquer());
+			
+			// Nombre de miel pour chaque niveaux
+			RelativeLayout layoutPrincipal = (RelativeLayout)
+					findViewById(R.id.activity_niveaux_relative_layout);
+			
+			final int nbMiels = niveaux.get(i).getNbMielsDebloques();
+			final int widthPetitesIcones = widthTextView / 5;
+			
+			final int marginXTextView = (Parametre.widthEcran - (3 * widthTextView)) / 4;
+			final int xTextView = marginXTextView + ((i % 3) *
+					(marginXTextView + widthTextView));
+			final int yTextViewDep = (Parametre.heightEcran -
+					(4 * widthTextView) - (3 * marginXTextView)) / 2;
+			final int yTextView = yTextViewDep + ((i / 3) * (marginXTextView + widthTextView));
+			
+			final int marginPetiteIcone = (widthTextView - (3 * widthPetitesIcones)) / 4;
+			final int xDepPetitIcone = xTextView + marginPetiteIcone;
+			final int yDepPetitIcone = yTextView + (widthTextView - widthPetitesIcones);
+			
+			for (int j = 0; j < 3; j++) {
+				ImageView imagePetitIcone = new ImageView(this);
+				layoutPrincipal.addView(imagePetitIcone);
+				imagePetitIcone.getLayoutParams().width = widthPetitesIcones;
+				imagePetitIcone.getLayoutParams().height = widthPetitesIcones;
+				imagePetitIcone.setX(xDepPetitIcone + (j * (marginPetiteIcone + widthPetitesIcones)));
+				imagePetitIcone.setY(yDepPetitIcone);
+				imagePetitIcone.setBackground(getResources().getDrawable(
+						(nbMiels >= j+1 ? R.drawable.pot_de_miel :
+							R.drawable.pot_de_miel_n_b)));
+			}
 			
 		}
 	}

@@ -21,6 +21,16 @@ public class Niveau {
 		this.nbEtoilesPourDebloquer = nbEtoilesPourDebloquer;
 	}
 	
+	public int getNbMielsDebloques() {
+		int nbMiels = 0;
+		for (int i = 0; i < 3; i++) {
+			if (scoresAFaire[i] <= scoreMaxiFait) {
+				nbMiels++;
+			}
+		}
+		return nbMiels;
+	}
+	
 	public void setScoreMaxiFait(int score) {
 		scoreMaxiFait = score;
 	}
@@ -45,4 +55,9 @@ public class Niveau {
 		return nbEtoilesPourDebloquer;
 	}
 	
+	public void enregistrer(int score) {
+		if (score > scoreMaxiFait) {
+			scoreMaxiFait = score;
+		}
+	}
 }

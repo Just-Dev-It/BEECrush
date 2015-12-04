@@ -23,15 +23,17 @@ public class Jeu {
 		//TODO
 		int[] tab = {100, 200, 300};
 		niveaux.add(new Niveau(this, 1, 15, tab, 0));
-		niveaux.add(new Niveau(this, 2, 15, tab, 0));
-		niveaux.add(new Niveau(this, 3, 15, tab, 0));
-		niveaux.add(new Niveau(this, 4, 15, tab, 0));
-		niveaux.add(new Niveau(this, 5, 15, tab, 0));
-		niveaux.add(new Niveau(this, 6, 15, tab, 0));
-		niveaux.add(new Niveau(this, 7, 15, tab, 0));
-		niveaux.add(new Niveau(this, 8, 15, tab, 0));
-		niveaux.add(new Niveau(this, 9, 15, tab, 0));
-		niveaux.add(new Niveau(this, 10, 15, tab, 0));
+		niveaux.add(new Niveau(this, 2, 15, tab, 1));
+		niveaux.add(new Niveau(this, 3, 15, tab, 3));
+		niveaux.add(new Niveau(this, 4, 15, tab, 5));
+		niveaux.add(new Niveau(this, 5, 15, tab, 8));
+		niveaux.add(new Niveau(this, 6, 15, tab, 10));
+		niveaux.add(new Niveau(this, 7, 15, tab, 13));
+		niveaux.add(new Niveau(this, 8, 15, tab, 18));
+		niveaux.add(new Niveau(this, 9, 15, tab, 22));
+		niveaux.add(new Niveau(this, 10, 15, tab, 25));
+		niveaux.add(new Niveau(this, 11, 15, tab, 28));
+		niveaux.add(new Niveau(this, 12, 15, tab, 33));
 	}
 	
 	public Joueur getJoueur() {
