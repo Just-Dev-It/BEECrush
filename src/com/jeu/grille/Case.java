@@ -1,6 +1,7 @@
 package com.jeu.grille;
 
 
+import com.domaine.Base;
 import com.example.beecrush.R;
 import com.jeu.Fleur;
 import com.jeu.Parametre;
@@ -102,6 +103,47 @@ public class Case {
 	public void deselectionner() {
 		image.setBackground(Parametre.resources.
 				getDrawable(R.drawable.case_normal));
+	}
+	
+	public static boolean isDansCarre(int x, int y,
+			int xCarre, int yCarre, int wCarre) {
+		return (x >= xCarre && x <= xCarre + wCarre) &&
+				(y >= yCarre && y <= yCarre + wCarre);
+	}
+	
+	public Fleur getFleur() {
+		return fleur;
+	}
+	
+	public static Case getCaseInPos(int x, int y) {
+		int wCases = Grille.width_Cases;
+		Grille grille = Base.jeu.getGrille();
+		Case[][] cases = grille.getCases();
+		
+		for (int j = 0; j < grille.nbCasesY; j++) {
+			for (int i = 0; i < grille.nbCasesX; i++) {
+				Case c = cases[i][j];
+				if (Case.isDansCarre(x, y,
+						c.getxEcran(), c.getyEcran(), wCases)) {
+					return c;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public boolean isVide() {
+		return fleur == null;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Case)) {
+			return false;
+		} else {
+			Case other = (Case) o;
+			return xGrille == other.xGrille && yGrille == other.yGrille;
+		}
 	}
 	
 }

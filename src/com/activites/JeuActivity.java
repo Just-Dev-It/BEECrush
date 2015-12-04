@@ -10,7 +10,7 @@ import com.jeu.grille.Grille;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -64,6 +64,22 @@ public class JeuActivity extends Activity {
 		// Initialiser la grille
 		jeu.setGrille(new Grille(jeu));
 		
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:
+			jeu.getGrille().onTouchDOWN((int) event.getX(), (int) event.getY());
+			break;
+		case MotionEvent.ACTION_MOVE:
+			jeu.getGrille().onTouchMOVE((int) event.getX(), (int) event.getY());
+			break;
+		case MotionEvent.ACTION_UP:
+			jeu.getGrille().onTouchUP();
+			break;
+		}
+		return true;
 	}
 	
 }

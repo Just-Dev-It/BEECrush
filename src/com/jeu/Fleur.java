@@ -3,6 +3,7 @@ package com.jeu;
 import android.annotation.SuppressLint;
 import android.widget.ImageView;
 
+import com.example.beecrush.R;
 import com.jeu.grille.Case;
 import com.jeu.grille.Grille;
 
@@ -14,7 +15,7 @@ public class Fleur {
 	protected Case caseGrille;
 	protected ImageView image;
 	
-	public Fleur(TypeFleur type, Case caseGrille){
+	public Fleur(TypeFleur type, Case caseGrille) {
 		this.type = type;
 		this.caseGrille = caseGrille;
 		
@@ -24,12 +25,14 @@ public class Fleur {
 	public void initImage() {
 		image = new ImageView(Parametre.activiteDuJeu);
 		Parametre.layoutDuJeu.addView(image);
-		image.getLayoutParams().width = width;
-		image.getLayoutParams().height = width;
 		
 		int demiMargin = (Grille.width_Cases - width) >> 1;
 		image.setX(demiMargin + caseGrille.getxEcran());
 		image.setY(demiMargin + caseGrille.getyEcran());
+		image.getLayoutParams().width = width;
+		image.getLayoutParams().height = width;
+		image.setBackground(Parametre.resources.
+				getDrawable(R.drawable.case_selectionnee));
 	}
 	
 	public Case getCase(){
@@ -58,6 +61,34 @@ public class Fleur {
 		int nb = (int) (Math.random() * TypeFleur.values().length);     //Pour un entier entre 0 et length-1 
 		
 		return (TypeFleur.values()[i].name(), this.caseGrille);
+	}
+	
+	public static Fleur getFleurEnPos(int x,int  y) {
+		Case caseFleur = Case.getCaseInPos(x, y);
+		if (caseFleur != null && !caseFleur.isVide()) {
+			int wCases = Grille.width_Cases;
+			// Def Carre selectionnable
+			int wCarreSelec = Grille.width_Cases_Selectionnables;
+			int xCarreSelec = caseFleur.getxEcran() +
+					((wCases - wCarreSelec) >> 1);
+			int yCarreSelec = caseFleur.getyEcran() +
+					((wCases - wCarreSelec) >> 1);
+			if (Case.isDansCarre(x, y,
+					xCarreSelec, yCarreSelec, wCarreSelec)) {
+				return caseFleur.getFleur();
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Fleur)) {
+			return false;
+		} else {
+			Fleur other = (Fleur) o;
+			return caseGrille.equals(other.caseGrille);
+		}
 	}
 
 }
