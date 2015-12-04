@@ -3,6 +3,8 @@ package com.domaine;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.activites.JeuActivity;
+import com.jeu.Parametre;
 import com.jeu.grille.Grille;
 
 public class Jeu {
@@ -59,5 +61,9 @@ public class Jeu {
 	
 	public Grille getGrille() {
 		return grille;
+	}
+	
+	public void finir() {
+		((JeuActivity) Parametre.activiteDuJeu).finir();
 	}
 }

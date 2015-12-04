@@ -24,7 +24,7 @@ public class Case {
 
 	public Case(int xGrille, int yGrille,
 			int xEcran, int yEcran, Grille grille) {
-		this.xEcran = xGrille;
+		this.xGrille = xGrille;
 		this.yGrille = yGrille;
 		this.xEcran = xEcran;
 		this.yEcran = yEcran;
@@ -48,7 +48,7 @@ public class Case {
 	}
 	
 	public int getxEcran() {
-		return this.xGrille;
+		return this.xEcran;
 	}
 	
 	public int getyEcran() {
@@ -61,10 +61,10 @@ public class Case {
 	
 	public static Direction getDirection(Case cDep, Case cArr) {
 		int xArr, yArr, xDep, yDep;
-		xArr = cArr.getxGrille();
-		yArr = cArr.getyGrille();
-		xDep = cDep.getxGrille();
-		yDep = cDep.getyGrille();
+		xArr = cArr.xGrille;
+		yArr = cArr.yGrille;
+		xDep = cDep.xGrille;
+		yDep = cDep.yGrille;
 		
 		if (xArr-1==xDep && yArr==yDep)
 			return Direction.DROITE;
@@ -91,6 +91,7 @@ public class Case {
 	}
 	
 	public void enleverFleur(){
+		deselectionner();
 		this.fleur.supprimer();
 		this.fleur = null;
 	}

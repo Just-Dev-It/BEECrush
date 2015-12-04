@@ -3,6 +3,7 @@ package com.jeu.grille;
 import com.domaine.Jeu;
 import com.jeu.Fleur;
 import com.jeu.Parametre;
+import com.jeu.TypeFleur;
 
 public class Grille {
 
@@ -53,7 +54,7 @@ public class Grille {
 	public void initFleurs() {
 		for (int i = 0; i < nbCasesX; i++) {
 			for (int j = 0; j < nbCasesY; j++) {
-				if (cases[i][j] == null) {
+				if (cases[i][j].isVide()) {
 					cases[i][j].ajouterFleur(Fleur.getFleurAleat(cases[i][j]));
 				}
 			}

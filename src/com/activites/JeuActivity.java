@@ -5,10 +5,14 @@ import com.domaine.Jeu;
 import com.domaine.Joueur;
 import com.domaine.Niveau;
 import com.example.beecrush.R;
+import com.jeu.BoiteDialogue;
 import com.jeu.Parametre;
 import com.jeu.grille.Grille;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.Window;
@@ -36,6 +40,8 @@ public class JeuActivity extends Activity {
 	}
 	
 	private void init() {
+		jeu.getJoueur().init();
+		
 		Parametre.activiteDuJeu = this;
 		Parametre.layoutDuJeu = (RelativeLayout)
 				findViewById(R.id.activity_jeu_relative_layout);
@@ -49,6 +55,7 @@ public class JeuActivity extends Activity {
 		linearLayout.addView(seekBar);
 		seekBar.setMax(niveau.getScoresAFaire()[2]);
 		seekBar.getLayoutParams().width = Parametre.widthEcran / 3;
+		jeu.getJoueur().seekBarScore = seekBar;
 		
 		TextView textViewNiveau = new TextView(this);
 		textViewNiveau.setText("" + niveau.getNumero());
@@ -60,6 +67,7 @@ public class JeuActivity extends Activity {
 				+ "/" + niveau.getNbAbeilles());
 		linearLayout.addView(textViewNbAbeilles);
 		textViewNbAbeilles.getLayoutParams().width = Parametre.widthEcran / 3;
+		jeu.getJoueur().textViewNbAbeilles = textViewNbAbeilles;
 		
 		// Initialiser la grille
 		jeu.setGrille(new Grille(jeu));
@@ -80,6 +88,24 @@ public class JeuActivity extends Activity {
 			break;
 		}
 		return true;
+	}
+	
+	public void finir() {
+		String msg1 = "Quitter";
+		
+		OnClickListener action1 = new OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				startActivity(new Intent(
+						JeuActivity.this, NiveauxActivity.class));
+				finish();
+			}
+		};
+		
+		BoiteDialogue dialogue = new BoiteDialogue(
+				this, "GAME OVER", msg1, action1, null, null);
+		
+		dialogue.show();
 	}
 	
 }

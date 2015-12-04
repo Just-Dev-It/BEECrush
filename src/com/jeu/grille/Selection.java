@@ -56,9 +56,11 @@ public class Selection {
 			return true;
 		} else {
 			Case caseNouvelleFleur = fleur.getCase();
-			Case caseDerniereFleurSeletionnee = fleursSelectionnees.
+			Case caseDerniereFleurSelectionnee = fleursSelectionnees.
 					get(fleursSelectionnees.size() - 1).getCase();
-			return caseNouvelleFleur.estACoteDe(caseDerniereFleurSeletionnee);
+			return caseNouvelleFleur.estACoteDe(caseDerniereFleurSelectionnee)
+					&& fleur.memeTypeQue(
+							caseDerniereFleurSelectionnee.getFleur());
 		}
 	}
 	
@@ -74,14 +76,11 @@ public class Selection {
 			
 			jeu.getGrille().initFleurs();
 			jeu.getJoueur().augmenterScoreDe(getScore());
+			jeu.getJoueur().incrementerNbAbeilles();
 			mettreA0();
 		} else {
 			deselectionnerDerniere();
 		}
-	}
-	
-	public void retirerDerniereFleur() {
-		fleursSelectionnees.remove(fleursSelectionnees.size() - 1);
 	}
 	
 }

@@ -1904,6 +1904,11 @@ containing a value of this type.
         public static final int case_normal=0x7f02003b;
         public static final int case_selectionnee=0x7f02003c;
         public static final int ic_launcher=0x7f02003d;
+        public static final int img_cinq=0x7f02003e;
+        public static final int img_deux=0x7f02003f;
+        public static final int img_quatre=0x7f020040;
+        public static final int img_trois=0x7f020041;
+        public static final int img_un=0x7f020042;
     }
     public static final class id {
         public static final int action_bar=0x7f090040;

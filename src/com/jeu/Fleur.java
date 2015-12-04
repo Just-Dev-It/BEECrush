@@ -3,7 +3,6 @@ package com.jeu;
 import android.annotation.SuppressLint;
 import android.widget.ImageView;
 
-import com.example.beecrush.R;
 import com.jeu.grille.Case;
 import com.jeu.grille.Grille;
 
@@ -18,8 +17,6 @@ public class Fleur {
 	public Fleur(TypeFleur type, Case caseGrille) {
 		this.type = type;
 		this.caseGrille = caseGrille;
-		
-		initImage();
 	}
 	
 	public void initImage() {
@@ -31,8 +28,7 @@ public class Fleur {
 		image.setY(demiMargin + caseGrille.getyEcran());
 		image.getLayoutParams().width = width;
 		image.getLayoutParams().height = width;
-		image.setBackground(Parametre.resources.
-				getDrawable(R.drawable.case_selectionnee));
+		image.setBackground(TypeFleur.getDrawableImage(type));
 	}
 	
 	public Case getCase(){
@@ -41,6 +37,7 @@ public class Fleur {
 	
 	public void ajouter(Case nouvelleCase){
 		this.caseGrille = nouvelleCase;
+		initImage();
 	}
 	
 	public void supprimer() {
@@ -57,10 +54,8 @@ public class Fleur {
 	}
 	
 	public static Fleur getFleurAleat(Case caseGrille) {
-		//TODO
-		int nb = (int) (Math.random() * TypeFleur.values().length);     //Pour un entier entre 0 et length-1 
-		
-		return (TypeFleur.values()[i].name(), this.caseGrille);
+		int nb = (int) (Math.random() * TypeFleur.values().length);
+		return new Fleur(TypeFleur.values()[nb], caseGrille);
 	}
 	
 	public static Fleur getFleurEnPos(int x,int  y) {
@@ -89,6 +84,10 @@ public class Fleur {
 			Fleur other = (Fleur) o;
 			return caseGrille.equals(other.caseGrille);
 		}
+	}
+	
+	public boolean memeTypeQue(Fleur fleur) {
+		return type == fleur.type;
 	}
 
 }
