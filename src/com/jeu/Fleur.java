@@ -53,9 +53,11 @@ public class Fleur {
 		caseGrille.deselectionner();
 	}
 	
-	public static Fleur getFleurAleat() {
+	public static Fleur getFleurAleat(Case caseGrille) {
 		//TODO
-		return null;
+		int nb = (int) (Math.random() * TypeFleur.values().length);     //Pour un entier entre 0 et length-1 
+		
+		return (TypeFleur.values()[i].name(), this.caseGrille);
 	}
 
 }
