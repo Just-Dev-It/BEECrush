@@ -5,8 +5,10 @@ import com.domaine.Joueur;
 import com.example.beecrush.R;
 import com.jeu.Parametre;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -28,6 +31,7 @@ public class MainActivity extends Activity {
 		init();
 	}
 	
+	@SuppressLint("NewApi")
 	private void init() {
 		
 		DisplayMetrics dm = new DisplayMetrics();
@@ -49,5 +53,21 @@ public class MainActivity extends Activity {
 				finish();
 			}
 		});
+		
+		TextView imageAbeille = (TextView) findViewById(R.id.activity_main_image_abeille);
+		imageAbeille.getLayoutParams().width = Parametre.widthEcran / 4;
+		imageAbeille.getLayoutParams().height = Parametre.widthEcran / 4;
+		imageAbeille.setBackground(getResources().getDrawable(R.drawable.abeille));
+		imageAbeille.setText("");
+		
+		TextView textTuto = (TextView) findViewById(R.id.activity_main_text_tuto);
+		textTuto.setText("Le but du jeu est de recolter le plus de pollen possible pour" +
+				"faire du miel et liberer la reine des abeilles.");
+		textTuto.setBackgroundColor(Color.YELLOW);
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// INTERDIRE
 	}
 }

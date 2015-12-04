@@ -1,8 +1,12 @@
 package com.jeu;
 
+import com.activites.JeuActivity;
+
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface.OnClickListener;
+import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -13,21 +17,19 @@ public class BoiteDialogue extends Builder {
 		super(context);
 	}
 	
-	public BoiteDialogue(Context context, View view,
-			String msg1, OnClickListener action1,
-			String msg2, OnClickListener action2) {
+	public BoiteDialogue(Context context, String message,
+			String msgPositive, OnClickListener actionPositive) {
 		
 		super(context);
 		
-		super.setView(view);
+		TextView textView = new TextView(context);
+		textView.setText(message);
+		textView.setGravity(Gravity.CENTER);
+		textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, JeuActivity.textSize);
+		textView.setTextColor(Color.BLACK);
 		
-		if (msg1 != null) {
-			super.setPositiveButton(msg1, action1);
-		}
-		
-		if (msg2 != null) {
-			super.setNegativeButton(msg2, action2);
-		}
+		super.setView(textView);
+		super.setNegativeButton(msgPositive, actionPositive);
 	}
 	
 	public BoiteDialogue(Context context, String message,
@@ -38,18 +40,13 @@ public class BoiteDialogue extends Builder {
 		
 		TextView textView = new TextView(context);
 		textView.setText(message);
-		textView.setGravity(Gravity.CENTER_VERTICAL);
-		textView.setGravity(Gravity.CENTER_HORIZONTAL);
+		textView.setGravity(Gravity.CENTER);
+		textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, JeuActivity.textSize);
+		textView.setTextColor(Color.BLACK);
 		
 		super.setView(textView);
-		
-		if (msgPositive != null) {
-			super.setPositiveButton(msgPositive, actionPositive);
-		}
-		
-		if (msgNegative != null) {
-			super.setNegativeButton(msgNegative, actionNegative);
-		}
+		super.setPositiveButton(msgPositive, actionPositive);
+		super.setNegativeButton(msgNegative, actionNegative);
 	}
 	
 }

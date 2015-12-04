@@ -10,23 +10,28 @@ import com.jeu.BoiteDialogue;
 import com.jeu.Parametre;
 import com.jeu.grille.Grille;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class JeuActivity extends Activity {
 
 	private MediaPlayer son;
+	public static final int textSize = Parametre.widthEcran / 20;
 	
 	private Jeu jeu = Base.jeu;
 	private Joueur joueur = jeu.getJoueur();
@@ -43,6 +48,7 @@ public class JeuActivity extends Activity {
 		init();
 	}
 	
+	@SuppressLint("NewApi")
 	private void init() {
 		jeu.getJoueur().init();
 		
@@ -52,32 +58,45 @@ public class JeuActivity extends Activity {
 		Parametre.resources = getResources();
 		
 		// Inialiser menu haut
-		LinearLayout linearLayout = (LinearLayout) findViewById(
-				R.id.activity_jeu_linear_layout_haut);
+		RelativeLayout layout = Parametre.layoutDuJeu;
 		
-		/*SeekBar seekBar = new SeekBar(this);
-		linearLayout.addView(seekBar);
-		seekBar.setMax(niveau.getScoresAFaire()[2]);
-		seekBar.getLayoutParams().width = Parametre.widthEcran / 3;
-		jeu.getJoueur().seekBarScore = seekBar;*/
+		int widthFond = Parametre.widthEcran - 100;
+		int xPosFond = 50;
+		int yPosFond = 50;
+		int heightFond = Parametre.heightEcran / 10;
 		
-		Barre seekBar = new Barre(this);
-		linearLayout.addView(seekBar);
-		seekBar.setMax(niveau.getScoresAFaire()[2]);
-		seekBar.getLayoutParams().width = Parametre.widthEcran / 3;
+		ImageView imageFond = new ImageView(this);
+		layout.addView(imageFond);
+		imageFond.setBackgroundColor(Color.YELLOW);
+		imageFond.setX(xPosFond);
+		imageFond.setY(yPosFond);
+		imageFond.getLayoutParams().width = widthFond;
+		imageFond.getLayoutParams().height = heightFond;
+		
+		Barre seekBar = new Barre(this, 300);
 		jeu.getJoueur().seekBarScore = seekBar;
 		
 		TextView textViewNiveau = new TextView(this);
-		textViewNiveau.setText("" + niveau.getNumero());
-		linearLayout.addView(textViewNiveau);
+		textViewNiveau.setText("Niveau\n" + niveau.getNumero());
+		layout.addView(textViewNiveau);
 		textViewNiveau.getLayoutParams().width = Parametre.widthEcran / 3;
+		textViewNiveau.setX(Parametre.widthEcran / 3);
+		textViewNiveau.setY(Parametre.widthEcran / 12);
+		textViewNiveau.setGravity(Gravity.CENTER);
+		textViewNiveau.setTextColor(Color.BLACK);
+		textViewNiveau.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 		
 		TextView textViewNbAbeilles = new TextView(this);
-		textViewNbAbeilles.setText(joueur.getNbAbeillesUtilises()
+		textViewNbAbeilles.setText("Abeilles\n" + joueur.getNbAbeillesUtilises()
 				+ "/" + niveau.getNbAbeilles());
-		linearLayout.addView(textViewNbAbeilles);
+		layout.addView(textViewNbAbeilles);
 		textViewNbAbeilles.getLayoutParams().width = Parametre.widthEcran / 3;
 		jeu.getJoueur().textViewNbAbeilles = textViewNbAbeilles;
+		textViewNbAbeilles.setX(2 * Parametre.widthEcran / 3);
+		textViewNbAbeilles.setY(Parametre.widthEcran / 12);
+		textViewNbAbeilles.setGravity(Gravity.CENTER);
+		textViewNbAbeilles.setTextColor(Color.BLACK);
+		textViewNbAbeilles.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
 		
 		// Initialiser la grille
 		jeu.setGrille(new Grille(jeu));
@@ -104,7 +123,11 @@ public class JeuActivity extends Activity {
 		jeu.getJoueur().enregistrerScoreFait(jeu.getNiveauSelectionne(),
 				joueur.getScoreFaitEnCeMoment());
 		
-		String msg1 = "Retourner";
+		final int nbPots = jeu.getJoueur().getNbEtoiles();
+		String msg = (nbPots == 0) ? "Vous avez perdu !" :
+			"Vous venez de gagner " + nbPots + " pots de miel !";
+		
+		String msg1 = "Revenir";
 		
 		OnClickListener action1 = new OnClickListener() {
 			@Override
@@ -116,7 +139,7 @@ public class JeuActivity extends Activity {
 		};
 		
 		BoiteDialogue dialogue = new BoiteDialogue(
-				this, "GAME OVER", msg1, action1, null, null);
+				this, msg, msg1, action1);
 		
 		dialogue.show();
 	}
@@ -128,6 +151,34 @@ public class JeuActivity extends Activity {
 		}
 		son = MediaPlayer.create(this, R.raw.son_parcours_abeille);
 		son.start();
+	}
+	
+	public void demanderQuitter() {
+		
+		OnClickListener action1 = new OnClickListener() {		
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				//RIEN
+			}
+		};
+		
+		OnClickListener action2 = new OnClickListener() {		
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				startActivity(new Intent(JeuActivity.this, NiveauxActivity.class));
+			}
+		};
+		
+		BoiteDialogue dialogue = new BoiteDialogue(this,
+				"Voulez-vous vraiment quitter la partie ?",
+				"Non", action1, "Oui", action2);
+		
+		dialogue.show();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		demanderQuitter();
 	}
 	
 }

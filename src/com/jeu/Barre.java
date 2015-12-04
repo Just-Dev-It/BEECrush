@@ -14,19 +14,22 @@ public class Barre extends View {
 	
 	protected int xPos = Parametre.widthEcran / 12;
 	protected int yPos = xPos;
-	protected int width = (Parametre.widthEcran / 3) - (2 * xPos);
+	protected int width = (Parametre.widthEcran / 3) - xPos;
 	protected int height = width / 4;
 	
 	protected int epaisseurContour = height / 20;
 	
 	protected int max;
 	protected int miel;
-	protected int progression;
 	
 	protected ImageView imageContour;
 	protected ImageView imageVide;
 	protected ImageView imagePleine;
 	
+	protected ImageView imageViewAbeille1;
+	protected ImageView imageViewAbeille2;
+	protected ImageView imageViewAbeille3;
+		
 	public Barre(Context context, int max){
 		super(context);
 		this.miel = 0;
@@ -82,11 +85,68 @@ public class Barre extends View {
 		imageContour.getLayoutParams().width = width;
 		imageContour.getLayoutParams().height = height;
 		
+		imageVide.getLayoutParams().width = width - (2 * epaisseurContour);
+		imageVide.getLayoutParams().height = height - (2 * epaisseurContour);
+		
+		imagePleine.getLayoutParams().height = height - (2 * epaisseurContour);
+		
 		majImages();
+		
+		// Les abeilles
+		final int withPots = 2 * height / 3;
+		final int xPosPots = xPos - (withPots / 2);
+		final int yPosPots = yPos + height + 5;
+		final int marginPots = width / 3;
+		
+		imageViewAbeille1 = new ImageView(activity);
+		imageViewAbeille2 = new ImageView(activity);
+		imageViewAbeille3 = new ImageView(activity);
+		
+		layout.addView(imageViewAbeille1);
+		layout.addView(imageViewAbeille2);
+		layout.addView(imageViewAbeille3);
+		
+		imageViewAbeille1.setBackground(Parametre.resources.
+				getDrawable(R.drawable.pot_de_miel_n_b));
+		imageViewAbeille2.setBackground(Parametre.resources.
+				getDrawable(R.drawable.pot_de_miel_n_b));
+		imageViewAbeille3.setBackground(Parametre.resources.
+				getDrawable(R.drawable.pot_de_miel_n_b));
+		
+		imageViewAbeille1.getLayoutParams().width = withPots;
+		imageViewAbeille2.getLayoutParams().width = withPots;
+		imageViewAbeille3.getLayoutParams().width = withPots;
+		imageViewAbeille1.getLayoutParams().height = withPots;
+		imageViewAbeille2.getLayoutParams().height = withPots;
+		imageViewAbeille3.getLayoutParams().height = withPots;
+		
+		imageViewAbeille1.setX(xPosPots + marginPots);
+		imageViewAbeille1.setY(yPosPots);
+		imageViewAbeille2.setX(xPosPots + (2 * marginPots));
+		imageViewAbeille2.setY(yPosPots);
+		imageViewAbeille3.setX(xPosPots + (3 * marginPots));
+		imageViewAbeille3.setY(yPosPots);
 		
 	}
 	
 	public void majImages() {
+		imagePleine.getLayoutParams().width = (int) (((float) miel / (float) max)
+				* (float) (width - (2 * epaisseurContour)));
+		if (imagePleine.getLayoutParams().width > width - (2 * epaisseurContour)) {
+			imagePleine.getLayoutParams().width = width - (2 * epaisseurContour);
+		}
 		
+		if (miel >= 100) {
+			imageViewAbeille1.setBackground(Parametre.resources.
+					getDrawable(R.drawable.pot_de_miel));
+		}
+		if (miel >= 200) {
+			imageViewAbeille2.setBackground(Parametre.resources.
+					getDrawable(R.drawable.pot_de_miel));
+		}
+		if (miel >= 300) {
+			imageViewAbeille3.setBackground(Parametre.resources.
+					getDrawable(R.drawable.pot_de_miel));
+		}
 	}
 }

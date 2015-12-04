@@ -2,6 +2,8 @@ package com.domaine;
 
 import java.util.List;
 
+import com.jeu.Barre;
+
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -12,7 +14,7 @@ public class Joueur {
 	protected int scoreFaitEnCeMoment;
 	
 	public TextView textViewNbAbeilles;
-	public SeekBar seekBarScore;
+	public Barre seekBarScore;
 	
 	public Joueur(Jeu jeu, String nom) {
 		this.jeu = jeu;
@@ -45,11 +47,11 @@ public class Joueur {
 	}
 	
 	public void ecrireScore() {
-		seekBarScore.setProgress(scoreFaitEnCeMoment);
+		seekBarScore.setMiel(scoreFaitEnCeMoment);
 	}
 	
 	public void ecrireNbAbeilles() {
-		textViewNbAbeilles.setText(nbAbeillesUtilises
+		textViewNbAbeilles.setText("Abeilles\n" + nbAbeillesUtilises
 				+ "/" + jeu.getNiveauSelectionne().getNbAbeilles());
 	}
 	

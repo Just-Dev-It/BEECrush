@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -66,6 +67,8 @@ public class NiveauxActivity extends Activity {
 		textViewEtoiles.getLayoutParams().height = widthIcone;
 		textViewEtoiles.setText("x " + jeu.getJoueur().getNbEtoiles());
 		textViewEtoiles.setGravity(Gravity.CENTER);
+		textViewEtoiles.setTextSize(TypedValue.COMPLEX_UNIT_PX, JeuActivity.textSize);
+		textViewEtoiles.setTextColor(Color.BLACK);
 		
 		// Afficher tous les niveaux
 		TableRow tableRow = null;
@@ -83,8 +86,16 @@ public class NiveauxActivity extends Activity {
 			tableRow.addView(textView);
 			textView.setText("" + niveaux.get(i).getNumero());
 			textView.setGravity(Gravity.CENTER);
+			textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, JeuActivity.textSize);
+			textView.setTextColor(Color.BLACK);
 			
-			textView.setBackground(getResources().getDrawable(R.drawable.img_un));
+			if (jeu.getJoueur().getNbEtoiles() <
+					niveaux.get(i).getNbEtoilesPourDebloquer()) {
+				textView.setEnabled(false);
+				textView.setBackground(getResources().getDrawable(R.drawable.img_un_n_b));
+			} else {
+				textView.setBackground(getResources().getDrawable(R.drawable.img_un));
+			}
 			
 			int numLigne = tableLayout.getChildCount() - 1;
 			int numGrille = tableRow.getChildCount() - 1;
@@ -108,9 +119,6 @@ public class NiveauxActivity extends Activity {
 							JeuActivity.class));
 				}
 			});
-			
-			textView.setEnabled(jeu.getJoueur().getNbEtoiles() >=
-					niveaux.get(i).getNbEtoilesPourDebloquer());
 			
 			// Nombre de miel pour chaque niveaux
 			RelativeLayout layoutPrincipal = (RelativeLayout)
@@ -143,6 +151,12 @@ public class NiveauxActivity extends Activity {
 			}
 			
 		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		startActivity(new Intent(this, MainActivity.class));
+		finish();
 	}
 	
 }

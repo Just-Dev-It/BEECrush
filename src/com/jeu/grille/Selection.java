@@ -17,6 +17,8 @@ import com.jeu.Parametre;
 
 public class Selection {
 	
+	public static final int valeur_defaut = 8;
+	
 	private Thread thread;
 	
 	private Jeu jeu;
@@ -55,7 +57,8 @@ public class Selection {
 		int nbFleurs = fleursSelectionnees.size();
 		int lvl = jeu.getNiveauSelectionne().getNumero();
 		
-		return 20 * (nbFleurs - ((lvl + 1) > 0 ? lvl + 1 : 0));
+		int score = valeur_defaut * (nbFleurs - (lvl + 1));
+		return score > 0 ? score : 0;
 	}
 	
 	/**
