@@ -72,6 +72,7 @@ public class Selection {
 				fleur.getCase().enleverFleur();
 			}
 			
+			jeu.getGrille().initFleurs();
 			jeu.getJoueur().augmenterScoreDe(getScore());
 			mettreA0();
 		} else {
